@@ -36,7 +36,6 @@ app.use(express.json());
 app.use(cors());
 //This middleware parses incoming requests with JSON payloads, allowing you to easily handle JSON data in your request body.
 app.use('/tasks', taskRoutes);
-
 console.log('hello world', DB_URI, PORT);
 // 'mongodb://localhost:27017/task-manager'
 
