@@ -15,7 +15,7 @@ export const TaskManager = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const API_URL = 'https://taskmanager1-2-0ejm.onrender.com/tasks';
+  const API_URL = 'https://taskmanager1-3-uxlz.onrender.com/tasks';
 
   useEffect(() => {
     const fetchTasks = async () => {
