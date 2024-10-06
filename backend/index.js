@@ -27,16 +27,15 @@ const taskRoutes = require('./src/routes/task.route');
 //   TaskServiceInstance.update,
 //   TaskServiceInstance.delete
 // );
-
+const app = express();
+const PORT = process.env.PORTUSED;
+const DB_URI = process.env.MONGODB_URL;
 app.use(express.json());
 //And paste the below line after app.use(express.json);
 //This middleware enables CORS for all routes, allowing your server to accept requests from different origins.
 app.use(cors());
 //This middleware parses incoming requests with JSON payloads, allowing you to easily handle JSON data in your request body.
 app.use('/tasks', taskRoutes);
-const app = express();
-const PORT = process.env.PORTUSED;
-const DB_URI = process.env.MONGODB_URL;
 console.log('hello world', DB_URI, PORT);
 // 'mongodb://localhost:27017/task-manager'
 
