@@ -34,7 +34,6 @@ app.use(cors());
 app.use(express.json());
 //And paste the below line after app.use(express.json);
 app.use('/tasks', taskRoutes);
-
 const app = express();
 const PORT = process.env.PORTUSED;
 const DB_URI = process.env.MONGODB_URL;
