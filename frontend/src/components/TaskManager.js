@@ -1,12 +1,11 @@
-
-import React, { useState, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
-import axios from "axios";
-import TaskTable from "./TaskTable";
-import TaskModal from "./TaskModal";
-import { LoadingIndicator } from "./LoadingIndicator";
-import { Fab } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import React, { useState, useEffect } from 'react';
+import { Box, Typography } from '@mui/material';
+import axios from 'axios';
+import TaskTable from './TaskTable';
+import TaskModal from './TaskModal';
+import { LoadingIndicator } from './LoadingIndicator';
+import { Fab } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 export const TaskManager = () => {
   const [tasks, setTasks] = useState([]);
@@ -16,17 +15,15 @@ export const TaskManager = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // const API_URL = "http://localhost:8082/tasks"
+  const API_URL = 'https://taskmanager1-2-0ejm.onrender.com/tasks';
 
-  const API_URL = "https://taskmanager1-2-0ejm.onrender.com/tasks"
-  
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get(API_URL);
+        const response = await axios.get(API_URL, {});
         setTasks(response.data);
       } catch (err) {
-        console.error("Error fetching tasks:", err);
+        console.error('Error fetching tasks:', err);
       } finally {
         setLoading(false);
       }
@@ -37,7 +34,7 @@ export const TaskManager = () => {
 
   const handleAddClick = () => {
     setIsEditing(false);
-    setTaskData({ title: "", description: "", deadline: "", status: "TODO" });
+    setTaskData({ title: '', description: '', deadline: '', status: 'TODO' });
     setFile(null);
     setOpen(true);
   };
@@ -57,11 +54,11 @@ export const TaskManager = () => {
 
   const handleSave = async () => {
     const formData = new FormData();
-    formData.append("title", taskData.title);
-    formData.append("description", taskData.description);
-    formData.append("deadline", taskData.deadline);
-    formData.append("status", taskData.status);
-    if (file) formData.append("pdf", file);
+    formData.append('title', taskData.title);
+    formData.append('description', taskData.description);
+    formData.append('deadline', taskData.deadline);
+    formData.append('status', taskData.status);
+    if (file) formData.append('pdf', file);
 
     try {
       if (isEditing) {
@@ -71,19 +68,19 @@ export const TaskManager = () => {
           deadline: taskData.deadline,
         });
       } else {
-        console.log("formData in handleSave", formData);
+        console.log('formData in handleSave', formData);
         await axios.post(API_URL, formData);
       }
       const response = await axios.get(API_URL);
       setTasks(response.data);
       handleClose();
     } catch (err) {
-      console.error("Error saving task:", err);
+      console.error('Error saving task:', err);
     }
   };
 
   const handleFileChange = (event) => {
-    console.log("handleFileChange invoked, event: ", event);
+    console.log('handleFileChange invoked, event: ', event);
     if (event.target.files.length) {
       setFile(event.target.files[0]);
     } else {
@@ -94,19 +91,19 @@ export const TaskManager = () => {
   const handleMarkAsDone = async (taskId) => {
     try {
       await axios.patch(`${API_URL}/${taskId}`, {
-        status: "DONE",
+        status: 'DONE',
       });
       const response = await axios.get(API_URL);
       setTasks(response.data);
     } catch (err) {
-      console.error("Error updating task:", err);
+      console.error('Error updating task:', err);
     }
   };
 
   const handleDownloadFile = (data, contentType) => {
     const blob = new Blob([data], { type: contentType });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
+    const a = document.createElement('a');
     a.href = url;
     a.download = `task-file-${new Date().toLocaleTimeString()}.pdf`;
     document.body.appendChild(a);
@@ -116,13 +113,13 @@ export const TaskManager = () => {
   };
 
   const handleDelete = async (taskId) => {
-    if (window.confirm("Are you sure you want to delete this task?")) {
+    if (window.confirm('Are you sure you want to delete this task?')) {
       try {
         await axios.delete(`${API_URL}/${taskId}`);
         const response = await axios.get(API_URL);
         setTasks(response.data);
       } catch (err) {
-        console.error("Error deleting task:", err);
+        console.error('Error deleting task:', err);
       }
     }
   };
@@ -141,12 +138,12 @@ export const TaskManager = () => {
         />
       ) : (
         <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          height="80vh"
+          display='flex'
+          justifyContent='center'
+          alignItems='center'
+          height='80vh'
         >
-          <Typography variant="h4" component="h1" gutterBottom>
+          <Typography variant='h4' component='h1' gutterBottom>
             No tasks found!
           </Typography>
         </Box>
@@ -163,19 +160,19 @@ export const TaskManager = () => {
         file={file}
         isEditing={isEditing}
       />
-      
-<Fab
-aria-label="add"
-color="primary"
-onClick={handleAddClick}
-style={{
-  position: "absolute",
-  bottom: 16,
-  right: 16,
-}}
->
-<AddIcon />
-</Fab>
-  </div>
+
+      <Fab
+        aria-label='add'
+        color='primary'
+        onClick={handleAddClick}
+        style={{
+          position: 'absolute',
+          bottom: 16,
+          right: 16,
+        }}
+      >
+        <AddIcon />
+      </Fab>
+    </div>
   );
 };
