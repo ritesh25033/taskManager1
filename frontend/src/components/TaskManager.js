@@ -20,7 +20,7 @@ export const TaskManager = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get(API_URL, {});
+        const response = await axios.get(API_URL);
         setTasks(response.data);
       } catch (err) {
         console.error('Error fetching tasks:', err);

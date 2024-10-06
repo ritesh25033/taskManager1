@@ -28,6 +28,13 @@ const taskRoutes = require('./src/routes/task.route');
 //   TaskServiceInstance.delete
 // );
 
+//This middleware enables CORS for all routes, allowing your server to accept requests from different origins.
+app.use(cors());
+//This middleware parses incoming requests with JSON payloads, allowing you to easily handle JSON data in your request body.
+app.use(express.json());
+//And paste the below line after app.use(express.json);
+app.use('/tasks', taskRoutes);
+
 const app = express();
 const PORT = process.env.PORTUSED;
 const DB_URI = process.env.MONGODB_URL;
@@ -46,13 +53,6 @@ mongoose
   .catch((err) => {
     console.error('Database connection error:', err);
   });
-
-//This middleware enables CORS for all routes, allowing your server to accept requests from different origins.
-app.use(cors());
-//This middleware parses incoming requests with JSON payloads, allowing you to easily handle JSON data in your request body.
-app.use(express.json());
-//And paste the below line after app.use(express.json);
-app.use('/tasks', taskRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
