@@ -65,7 +65,7 @@ export const TaskManager = () => {
 
     try {
       if (isEditing) {
-        await axios.patch(`API_URL/${taskData._id}`, {
+        await axios.patch(`${API_URL}/${taskData._id}`, {
           title: taskData.title,
           description: taskData.description,
           deadline: taskData.deadline,
@@ -93,7 +93,7 @@ export const TaskManager = () => {
 
   const handleMarkAsDone = async (taskId) => {
     try {
-      await axios.patch(`API_URL/${taskId}`, {
+      await axios.patch(`${API_URL}/${taskId}`, {
         status: "DONE",
       });
       const response = await axios.get(API_URL);
@@ -118,7 +118,7 @@ export const TaskManager = () => {
   const handleDelete = async (taskId) => {
     if (window.confirm("Are you sure you want to delete this task?")) {
       try {
-        await axios.delete(`API_URL/${taskId}`);
+        await axios.delete(`${API_URL}/${taskId}`);
         const response = await axios.get(API_URL);
         setTasks(response.data);
       } catch (err) {
